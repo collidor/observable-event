@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/collidor/observable-event/compare/v1.0.0...v1.0.1) (2026-08-15)
+
+
+### Bug Fixes
+
+* **ci:** rename workflow file to publish.yml to match npm trusted publisher configuration ([5d4b46b](https://github.com/collidor/observable-event/commit/5d4b46b6524160c49e65dab8050544cc1284ce86))
+
 # 1.0.0 (2026-08-15)
 
 
