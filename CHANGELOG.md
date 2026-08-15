@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/collidor/observable-event/compare/v1.0.1...v1.0.2) (2026-08-15)
+
+
+### Bug Fixes
+
+* **ci:** add --allow-dirty to jsr publish to ignore uncommitted lockfiles ([18df583](https://github.com/collidor/observable-event/commit/18df58344835501b6412c78fe172ef36e6aa92b8))
+
 ## [1.0.1](https://github.com/collidor/observable-event/compare/v1.0.0...v1.0.1) (2026-08-15)
 
 
