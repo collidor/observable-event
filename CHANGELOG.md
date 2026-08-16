@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/collidor/observable-event/compare/v1.0.3...v1.0.4) (2026-08-16)
+
+
+### Bug Fixes
+
+* trigger patch release ([9357e8f](https://github.com/collidor/observable-event/commit/9357e8fd6673ca4d00b67c0b587c7132f380d64c))
+
 ## [1.0.3](https://github.com/collidor/observable-event/compare/v1.0.2...v1.0.3) (2026-08-16)
 
 
