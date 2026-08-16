@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/collidor/observable-event/compare/v1.0.2...v1.0.3) (2026-08-16)
+
+
+### Bug Fixes
+
+* **ci:** add dummy NPM_TOKEN to satisfy semantic-release preflight check for OIDC ([f79215c](https://github.com/collidor/observable-event/commit/f79215c5d53bd83e857da86b8b9eb3477e14e26d))
+* **ci:** decouple npm and jsr publish from semantic-release ([6095673](https://github.com/collidor/observable-event/commit/6095673bc59dac859931a93806070f857d801713))
+* **ci:** re-enable native semantic-release npm publishing for OIDC ([84b3075](https://github.com/collidor/observable-event/commit/84b307587ff6ae7a6b571dfd719c74c4532440a5))
+
 ## [1.0.2](https://github.com/collidor/observable-event/compare/v1.0.1...v1.0.2) (2026-08-15)
 
 
