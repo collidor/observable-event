@@ -43,7 +43,7 @@
         "@swc/core": "^1.13.5"
     },
     "dependencies": {
-        "@collidor/event": "^4.3.3"
+        "@collidor/event": "^4.4.0"
     },
     "peerDependencies": {
         "rxjs": "^7"
