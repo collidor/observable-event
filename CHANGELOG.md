@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/collidor/observable-event/compare/v1.0.5...v1.0.6) (2026-09-26)
+
+
+### Bug Fixes
+
+* **deps:** update @collidor/event to ^4.5.0 ([5344909](https://github.com/collidor/observable-event/commit/5344909ea598854de354119e3a7b76e7a15de82b))
+
 ## [1.0.5](https://github.com/collidor/observable-event/compare/v1.0.4...v1.0.5) (2026-09-24)
 
 
