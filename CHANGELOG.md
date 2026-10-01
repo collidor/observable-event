@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/collidor/observable-event/compare/v1.0.6...v1.1.0) (2026-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update @collidor/event to ^4.7.0 ([beb974e](https://github.com/collidor/observable-event/commit/beb974eec63aada55a052855e7bcaa705390f407))
+
+
+### Features
+
+* **observable-event:** add dynamic PortChannel auto-subscription and handshake sync ([bb30e1f](https://github.com/collidor/observable-event/commit/bb30e1f4fff7154c94bc859313b72b94f184548b))
+
 ## [1.0.6](https://github.com/collidor/observable-event/compare/v1.0.5...v1.0.6) (2026-09-26)
 
 
