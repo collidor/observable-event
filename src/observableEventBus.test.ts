@@ -81,4 +81,126 @@ Deno.test("ObservableEventBus", async (t) => {
 
     assertEquals(result, ["1", "2"]);
   });
+
+  await t.step(
+    "should dynamically propagate subscriptions and availability across PortChannel",
+    async () => {
+      const { PortChannel } = await import("@collidor/event");
+
+      type FakePort = {
+        messages: any[];
+        sentMessages: any[];
+        receivedMessages: any[];
+        postMessage: (msg: any) => void;
+        onmessage: ((ev: any) => void) | null;
+        onmessageerror: ((ev: any) => void) | null;
+      };
+
+      const port1: FakePort = {
+        messages: [],
+        sentMessages: [],
+        receivedMessages: [],
+        postMessage: () => {},
+        onmessage: null,
+        onmessageerror: null,
+      };
+      const port2: FakePort = {
+        messages: [],
+        sentMessages: [],
+        receivedMessages: [],
+        postMessage: () => {},
+        onmessage: null,
+        onmessageerror: null,
+      };
+
+      port1.postMessage = function (msg: any) {
+        port2.onmessage?.({ data: msg, currentTarget: port2 } as any);
+      };
+      port2.postMessage = function (msg: any) {
+        port1.onmessage?.({ data: msg, currentTarget: port1 } as any);
+      };
+
+      const channel1 = new PortChannel();
+      const channel2 = new PortChannel();
+
+      channel1.addPort(port1);
+      channel2.addPort(port2);
+
+      const bus1 = new ObservableEventBus({ channel: channel1 });
+      const bus2 = new ObservableEventBus({ channel: channel2 });
+
+      // Before subscribing, channel1 has no subscribers for UserCreated
+      assertEquals(channel1.isAvailable("UserCreated"), false);
+
+      const received: string[] = [];
+      // Node 2 subscribes via RxJS Observable
+      const sub = bus2.on(UserCreated).subscribe((data) => {
+        received.push(data);
+      });
+
+      // Channel 1 should now immediately be aware of UserCreated subscription
+      assertEquals(channel1.isAvailable("UserCreated"), true);
+
+      // Node 1 emits an event over the channel
+      bus1.emit(new UserCreated("diana"));
+
+      assertEquals(received, ["diana"]);
+
+      // Node 2 unsubscribes via RxJS
+      sub.unsubscribe();
+
+      // Channel 1 should now reflect that UserCreated is no longer available
+      assertEquals(channel1.isAvailable("UserCreated"), false);
+    },
+  );
+
+  await t.step(
+    "should synchronize pre-existing listeners via bidirectional handshake on connect",
+    async () => {
+      const { PortChannel } = await import("@collidor/event");
+
+      type FakePort = {
+        postMessage: (msg: any) => void;
+        onmessage: ((ev: any) => void) | null;
+        onmessageerror: ((ev: any) => void) | null;
+      };
+
+      const port1: FakePort = {
+        postMessage: () => {},
+        onmessage: null,
+        onmessageerror: null,
+      };
+      const port2: FakePort = {
+        postMessage: () => {},
+        onmessage: null,
+        onmessageerror: null,
+      };
+
+      port1.postMessage = function (msg: any) {
+        port2.onmessage?.({ data: msg, currentTarget: port2 } as any);
+      };
+      port2.postMessage = function (msg: any) {
+        port1.onmessage?.({ data: msg, currentTarget: port1 } as any);
+      };
+
+      const channel1 = new PortChannel();
+      const channel2 = new PortChannel();
+
+      const bus1 = new ObservableEventBus({ channel: channel1 });
+      const bus2 = new ObservableEventBus({ channel: channel2 });
+
+      // Node 2 subscribes BEFORE ports are connected
+      const sub = bus2.on(OrderPlaced).subscribe(() => {});
+
+      // Connect ports
+      channel1.addPort(port1);
+      channel2.addPort(port2);
+
+      // Bidirectional handshake (startEvent <-> startAckEvent) should sync OrderPlaced to channel1
+      assertEquals(channel1.isAvailable("OrderPlaced"), true);
+
+      sub.unsubscribe();
+      assertEquals(channel1.isAvailable("OrderPlaced"), false);
+    },
+  );
 });
